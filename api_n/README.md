@@ -19,3 +19,6 @@ Rodar o projeto usando o Nodemon
 
 Instalar a dependencia para JWT
 ### npm install --save jsonwebtoken
+
+Gerenciar variaveis de ambiente
+## npm install dotenv

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 app.use(express.json());
 
@@ -15,7 +16,7 @@ app.post('/login', function (req, res){
     //console.log(req.body);
     if(req.body.usuario === 'danielsapup3@gmail.com' && req.body.senha === '1234567'){
         const { id } = 1;
-        var privateKey = 'cfa271b219251df7d1c8';
+        var privateKey = process.env.SECRET;
         var token = jwt.sign({id}, privateKey, {
             expiresIn: 600 //10 min
         })
