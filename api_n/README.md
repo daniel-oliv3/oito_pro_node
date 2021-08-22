@@ -13,3 +13,9 @@ Acessar o projeto no navegador
 
 Instalar o modulo para reniciar o servidor sempre que houver alteração no codigo fonte, g significa globalmente
 ### npm install -g nodemon
+
+Rodar o projeto usando o Nodemon
+### nodemon app.js
+
+Instalar a dependencia para JWT
+### npm install --save jsonwebtoken
