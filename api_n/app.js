@@ -2,11 +2,20 @@ const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const cors = require('cors');
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type, Authorization");
+    app.use(cors());
+    next();
+});
+
 app.get('/usuarios', function (req, res){
-    res.json({
+    return res.json({
         erro: false,
         menssagem: "Listar usuários!"
     });
@@ -21,13 +30,13 @@ app.post('/login', function (req, res){
             expiresIn: 600 //10 min
         })
 
-        res.json({
+        return res.json({
             erro: false,
             menssagem: "Login válido",
             token
         });
     }
-    res.json({
+    return res.json({
         erro: true,
         menssagem: "Login ou senha incorreto"
     });
