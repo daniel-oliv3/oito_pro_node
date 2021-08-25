@@ -3,7 +3,7 @@ const app = express();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cors = require('cors');
-const { promisify } = require('util');
+const { eAdmin } = require('./middlewares/auth');
 
 
 app.use(express.json());
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/usuarios', validarToken, function (req, res){
+app.get('/usuarios', eAdmin, function (req, res){
     return res.json({
         erro: false,
         messagem: "Listar usuários!"
@@ -45,29 +45,6 @@ app.post('/login', function (req, res){
     });
 });
 
-// Verificar se o token é valido
-async function validarToken(req, res, next){
-    const authHeder = req.headers.authorization;
-    const [ , token] = authHeder.split(' ');
-
-    if(!token){
-        return res.json({
-            erro: true,
-            messagem: "Erro: Token não encontrado!"
-        });
-    }
-    
-    try{
-        const decode = await promisify(jwt.verify)(token, process.env.SECRET);
-        req.userId = decode.id;
-        return next();
-    }catch(err){
-        return res.json({
-            erro: true,
-            messagem: "Erro: Token invalido!"
-        });
-    }
-}
 
 app.listen(8080, function(){
     console.log("Servidor iniciado na porta 8080: http://localhost:8080");
