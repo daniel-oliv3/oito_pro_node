@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const cors = require('cors');
 const { eAdmin } = require('./middlewares/auth');
@@ -28,8 +29,9 @@ app.get('/usuarios', eAdmin, function (req, res){
 
 app.post('/usuario', async (req, res) => {
     var dados = req.body;
+    dados.senha = await bcrypt.hash(dados.senha, 8);
 
-    await Usuario.create(req.body).then(function() {
+    await Usuario.create(dados).then(function() {
         return res.json({
             erro: false,
             messagem: "Usuário cadastrado com sucesso!"

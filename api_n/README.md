@@ -47,3 +47,5 @@ Instalar o drive do banco de dados
 Sequelize é uma biblioteca Javascript que facilita o gerenciamento de um banco de dados SQL
 ### npm install --save sequelize
 
+Instalar o módulo para criptografar a senha
+### npm install --save bcryptjs
