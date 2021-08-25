@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cors = require('cors');
 const { eAdmin } = require('./middlewares/auth');
+const Usuario = require('./models/Usuario');
 
 
 app.use(express.json());
@@ -16,11 +17,32 @@ app.use((req, res, next) => {
     next();
 });
 
+//const db = require("./models/db");
+
 app.get('/usuarios', eAdmin, function (req, res){
     return res.json({
         erro: false,
         messagem: "Listar usuários!"
     });
+});
+
+app.post('/usuario', async (req, res) => {
+    var dados = req.body;
+
+    await Usuario.create(req.body).then(function() {
+        return res.json({
+            erro: false,
+            messagem: "Usuário cadastrado com sucesso!"
+        });
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário não foi cadastrado!"
+        });
+    });
+    /*return res.json({
+        dados: req.body
+    });*/
 });
 
 app.post('/login', function (req, res){
