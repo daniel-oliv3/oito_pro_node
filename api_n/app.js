@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     next();
 });
 
-
+//Listar
 app.get('/usuarios', eAdmin, async function (req, res){
     await Usuario.findAll({order: [['id', 'DESC']]}).then(function(usuarios){
         return res.json({
@@ -33,6 +33,7 @@ app.get('/usuarios', eAdmin, async function (req, res){
     });
 });
 
+//Visualizar
 app.get('/usuario/:id',eAdmin, async (req, res) => {
     await Usuario.findByPk(req.params.id).
     then(usuario => {
@@ -84,6 +85,23 @@ app.put('/usuario', eAdmin, async (req, res) => {
         });
     });
 });
+
+//Apagar
+app.delete('/usuario/:id', eAdmin, async (req, res) => {
+    await Usuario.destroy({ where: {id: req.params.id}}). 
+    then(function(){
+        return res.json({
+            erro: false,
+            messagem: "Usuário apagado com sucesso!"
+        });
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário não foi apagado!"
+        });
+    });
+});
+
 
 app.post('/login', async (req, res) => {
 
