@@ -18,7 +18,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//const db = require("./models/db");
 
 app.get('/usuarios', eAdmin, function (req, res){
     return res.json({
@@ -47,25 +46,32 @@ app.post('/usuario', async (req, res) => {
     });*/
 });
 
-app.post('/login', function (req, res){
-    //console.log(req.body);
-    if(req.body.usuario === 'danielsapup3@gmail.com' && req.body.senha === '1234567'){
-        const { id } = 1;
-        var privateKey = process.env.SECRET;
-        var token = jwt.sign({id}, privateKey, {
+app.post('/login', async (req, res) => {
+
+    const usuario = await Usuario.findOne({where: {email: req.body.usuario}});
+    if(usuario === null){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário ou senha incorreta!"
+        });
+    }
+
+    if(!(await bcrypt.compare(req.body.senha, usuario.senha))){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário ou senha incorreta!"
+        });
+    }
+   
+        var token = jwt.sign({ id: usuario.id }, process.env.SECRET, {
             //expiresIn: 600 //10 min
             expiresIn: '7d' //7 dias
         })
 
         return res.json({
             erro: false,
-            messagem: "Login válido",
+            messagem: "Login realizado com sucesso!",
             token
-        });
-    }
-    return res.json({
-        erro: true,
-        messagem: "Login ou senha incorreto"
     });
 });
 
