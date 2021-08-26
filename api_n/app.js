@@ -33,6 +33,21 @@ app.get('/usuarios', eAdmin, async function (req, res){
     });
 });
 
+app.get('/usuario/:id',eAdmin, async (req, res) => {
+    await Usuario.findByPk(req.params.id).
+    then(usuario => {
+        return res.json({
+            erro: false,
+            usuario
+        });
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário não encontrado!"
+        });
+    });
+});
+
 app.post('/usuario', async (req, res) => {
     var dados = req.body;
     dados.senha = await bcrypt.hash(dados.senha, 8);
