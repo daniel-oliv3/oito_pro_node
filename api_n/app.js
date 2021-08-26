@@ -48,6 +48,7 @@ app.get('/usuario/:id',eAdmin, async (req, res) => {
     });
 });
 
+//Cadastrar
 app.post('/usuario', async (req, res) => {
     var dados = req.body;
     dados.senha = await bcrypt.hash(dados.senha, 8);
@@ -63,9 +64,25 @@ app.post('/usuario', async (req, res) => {
             messagem: "Erro: Usuário não foi cadastrado!"
         });
     });
-    /*return res.json({
-        dados: req.body
-    });*/
+});
+
+//Editar
+app.put('/usuario', eAdmin, async (req, res) => {
+    var dados = req.body;
+    dados.senha = await bcrypt.hash(dados.senha, 8);
+
+    await Usuario.update(dados, { where: {id: dados.id}}). 
+    then(function(){
+        return res.json({
+            erro: false,
+            messagem: "Usuário editado com sucesso!"
+        });
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário não foi editado!"
+        });
+    });
 });
 
 app.post('/login', async (req, res) => {
