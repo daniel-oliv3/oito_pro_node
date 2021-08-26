@@ -7,3 +7,6 @@ Acessar o diretorio do projeto
 
 Rodar o projeto React
 ### npm start
+
+Gerenciar as rotas
+### npm install --save react-router-dom
