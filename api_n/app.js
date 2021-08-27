@@ -109,14 +109,14 @@ app.post('/login', async (req, res) => {
     if(usuario === null){
         return res.json({
             erro: true,
-            messagem: "Erro: Usuário ou senha incorreta!"
+            messagem: "Erro: Usuário ou a senha incorreta!"
         });
     }
 
     if(!(await bcrypt.compare(req.body.senha, usuario.senha))){
         return res.json({
             erro: true,
-            messagem: "Erro: Usuário ou senha incorreta!"
+            messagem: "Erro: Usuário ou a senha incorreta!"
         });
     }
    

@@ -10,3 +10,6 @@ Rodar o projeto React
 
 Gerenciar as rotas
 ### npm install --save react-router-dom
+
+Realizar chamada para API
+### npm install --save axios
