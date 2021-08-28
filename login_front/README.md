@@ -1,4 +1,4 @@
-SEQUENCIA PARA CRIAR O PROJETO
+SEQUENCIA PARA CRIAR O PROJETO - Front-end
 Criar o projeto React - https://pt-br.reactjs.org/docs/create-a-new-react-app.html
 ### npx create-react-app my-app
 

@@ -1,4 +1,4 @@
-COMO RODAR O PROJETO BAIXADO
+COMO RODAR O PROJETO BAIXADO - Back-end
 Instalar todas as dependencias indicada pelo package.json
 ### npm install
 

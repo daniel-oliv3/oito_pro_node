@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
-import axios from 'axios';
-import { api } from '../../config/configApi';
+import { Context } from '../../Context/AuthContext';
+
+import api from '../../config/configApi';
 
 export const Login = () => {
+
+    const {authenticated} = useContext(Context);
+
+    console.log("Situação:" + authenticated);
 
     const [dadosUsuario, SetUsuario] = useState({
         usuario: '',
@@ -26,7 +31,7 @@ export const Login = () => {
             'Content-Type': 'application/json'
         };
 
-        axios.post(api + "/login", dadosUsuario, {headers})
+        api.post("/login", dadosUsuario, {headers})
         .then((response) => {
             console.log(response.data.erro);
             console.log(response.data.messagem);
@@ -41,6 +46,9 @@ export const Login = () => {
                     type: 'success',
                     messagem: response.data.messagem
                 });
+                // Salva o token no LocalStorage
+                localStorage.getItem('token', JSON.stringify(response.data.token));
+                api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
             }
         }).catch(() => {
             setStatus({
@@ -62,7 +70,7 @@ export const Login = () => {
                 <input type="text" name="usuario" placeholder="Digite o usuário" onChange={valorInput} /><br /><br />
 
                 <label>Senha: </label>
-                <input type="password" name="senha" placeholder="Digite a senha" onChange={valorInput} /><br /><br />
+                <input type="password" name="senha" placeholder="Digite a senha" autoComplete="on" onChange={valorInput} /><br /><br />
 
                 <button type="submit">Acessar</button>
             </form>
