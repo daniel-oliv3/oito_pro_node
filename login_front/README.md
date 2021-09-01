@@ -13,3 +13,6 @@ Gerenciar as rotas
 
 Realizar chamada para API
 ### npm install --save axios
+
+Utilizado para mudar de página e renderizar a nova página sem recarregar toda a aplicação
+### npm install --save history@4.9.0
