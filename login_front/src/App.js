@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Login } from './pages/Login';
-
+import Routes from './routes/routesAdm';
 import history from './services/history';
 
 import { AuthProvider } from './Context/AuthContext';
@@ -13,9 +12,7 @@ function App() {
     <div>
       <AuthProvider>
         <Router history={history}>
-          <Switch>
-            <Route path="/" component={Login} />
-          </Switch>
+          <Routes />
         </Router>
       </AuthProvider>
     </div>
